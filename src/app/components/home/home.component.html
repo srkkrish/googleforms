@@ -1,0 +1,97 @@
+<section class="gform">
+    <div class="form-container">
+        <form [formGroup]="form">
+            <div class="form-headers">
+                <mat-form-field [floatLabel]="'never'" appearance="fill">
+                    <input class="form-name" matInput placeholder="Form title" formControlName="formName">
+                </mat-form-field>
+
+                <mat-form-field [floatLabel]="'never'" appearance="fill">
+                    <input matInput placeholder="Form description" formControlName="formDesc">
+                </mat-form-field>
+            </div>
+
+            <button class="add-btn" matTooltip="Add Question" mat-mini-fab
+                aria-label="Icon button with add functionality" (click)="addQuestion()">
+                <mat-icon>add_circle_outline</mat-icon>
+            </button>
+
+            <div formArrayName="questions">
+                <div *ngFor="let question of questions.controls; let i = index">
+                    <div class="form-fields" [formGroupName]="i">
+                        <div class="form-group">
+                            <mat-form-field [floatLabel]="'never'" appearance="fill">
+                                <input matInput placeholder="Untitled Question" formControlName="ques">
+                            </mat-form-field>
+
+                            <mat-form-field class="input-types">
+                                <mat-select placeholder="Choose input type" formControlName="type">
+                                    <mat-option *ngFor="let input of inputTypes"
+                                        [value]="input.value">{{input.viewValue}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <!-- <select formControlName="type" (change)="onQuestionTypeChange(i)">
+                                <option value="text">Input</option>
+                                <option value="radio">Radio</option>
+                                <option value="checkbox">Checkbox</option>
+                            </select> -->
+                        </div>
+
+                        <ng-container *ngIf="question.get('type').value === 'text'">
+                            <mat-form-field style="width: 100%;" [floatLabel]="'never'" appearance="fill">
+                                <input matInput formControlName="input">
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container *ngIf="question.get('type').value === 'radio'">
+                            <div formArrayName="options">
+                                <div *ngFor="let option of getOptions(i).controls; let j = index">
+                                    <div [formGroupName]="j">
+                                        <mat-radio-group formControlName="option">
+                                            <mat-radio-button>
+                                                <mat-form-field [floatLabel]="'never'" appearance="fill">
+                                                    <input matInput formControlName="option">
+                                                </mat-form-field>
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+
+                                        <mat-icon matTooltip="Remove" (click)="removeOption(i, j)">close</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            <button mat-button (click)="addOption(i)">Add option</button>
+                        </ng-container>
+
+                        <ng-container *ngIf="question.get('type').value === 'checkbox'">
+                            <div formArrayName="options">
+                                <div *ngFor="let option of getOptions(i).controls; let j = index">
+                                    <div [formGroupName]="j">
+
+                                        <mat-checkbox>
+                                            <mat-form-field [floatLabel]="'never'" appearance="fill">
+                                                <input matInput formControlName="option">
+                                            </mat-form-field>
+                                        </mat-checkbox>
+
+                                        <mat-icon matTooltip="Remove" (click)="removeOption(i, j)">close</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            <button mat-button (click)="addOption(i)">Add option</button>
+                        </ng-container>
+
+                        <div class="delete-question">
+                            <mat-icon (click)="removeQuestion(i)">delete</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="save-form" color="primary" mat-raised-button type="submit" [disabled]="form.invalid"
+                (click)="onSubmit()">
+                Save Form
+            </button>
+        </form>
+    </div>
+</section>

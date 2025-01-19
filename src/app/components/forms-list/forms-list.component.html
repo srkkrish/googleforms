@@ -1,0 +1,16 @@
+<div class="forms-list">
+    <h2>Saved Forms</h2>
+    <div *ngFor="let obj of savedForms | keyvalue">
+        <div class="list-item">
+            <p class="form">
+                <img src="../../../assets/form.png" alt="gform" width="25" height="25">
+                {{ obj.key }}
+            </p>
+            <p class="date">{{ obj.value.createdDate }}</p>
+            <p class="icons">
+                <mat-icon matTooltip="Edit" (click)="editForm(obj)">edit</mat-icon>
+                <mat-icon matTooltip="Delete" (click)="deleteForm(obj)">delete</mat-icon>
+            </p>
+        </div>
+    </div>
+</div>

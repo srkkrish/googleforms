@@ -1,0 +1,40 @@
+.forms-list {
+    width: 770px;
+    margin: 0 auto;
+
+    .list-item {
+        display: flex;
+        padding: 0 1rem;
+        border-bottom: 1px solid lightgrey;
+
+        &:hover {
+            background-color: #734bbd36;
+        }
+
+        p {
+            width: 33.33%;
+            display: flex;
+            margin: 0.5rem 0;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form {
+            gap: 10px;
+            font-weight: bold;
+            justify-content: flex-start !important;
+        }
+
+        .date,
+        .icons {
+            color: grey;
+        }
+
+        .icons {
+            gap: 10px;
+            display: flex;
+            cursor: pointer;
+            justify-content: center;
+        }
+    }
+}
